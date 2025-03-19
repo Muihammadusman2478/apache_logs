@@ -73,8 +73,8 @@ generate_unique_ips_report() {
         ip_info=""
         [[ "$ip" == "$server_ip" ]] && ip_info=" --> IT IS YOUR SERVER IP"
         # Truncate domain and country if necessary
-        domain=$(truncate_string "$domain" 35)
-        country=$(truncate_string "$country" 15)
+        domain=$(truncate_string "$domain" 60)
+        country=$(truncate_string "$country" 30)
         printf "\e[1;32m| %-10s | %-18s | %-15s | %-35s %s|\e[0m\n" "$count" "$ip" "${country:-Unknown}" "${domain:-N/A}" "$ip_info" | append_and_display
     done
 
@@ -108,9 +108,9 @@ generate_unique_urls_report() {
         ip_info=""
         [[ "$ip" == "$server_ip" ]] && ip_info=" --> IT IS YOUR SERVER IP"
         # Truncate domain, country, and URL if necessary
-        domain=$(truncate_string "$domain" 35)
-        country=$(truncate_string "$country" 15)
-        url=$(truncate_string "$url" 30)
+        domain=$(truncate_string "$domain" 50)
+        country=$(truncate_string "$country" 30)
+        url=$(truncate_string "$url" 60)
         printf "\e[1;32m| %-10s | %-18s | %-15s | %-35s | %-30s %s|\e[0m\n" "$count" "$ip" "${country:-Unknown}" "${domain:-N/A}" "$url" "$ip_info" | append_and_display
     done
 
