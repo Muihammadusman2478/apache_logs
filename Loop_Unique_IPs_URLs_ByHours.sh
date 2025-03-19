@@ -61,7 +61,7 @@ for app_name in $(ls -l /home/master/applications/ | grep "^d" | awk '{print $NF
         echo -e "\e[1;34m──────────────────────────────────────────────────────────────────────────────────────────\e[0m" | append_and_display
 
         # Process logs (Filter requests based on user input)
-        zcat -f $log_files | awk -v end_time="$end_time" '$4 >= "["end_time' | awk '{print $1}' | sort | uniq -c | sort -nr | head -n 5 | while read count ip; do
+        cat $log_files | awk -v end_time="$end_time" '$4 >= "["end_time' | awk '{print $1}' | sort | uniq -c | sort -nr | head -n 5 | while read count ip; do
             country=$(curl -s "http://ip-api.com/line/$ip?fields=country")
             domain=$(dig +short -x "$ip" | head -n 1)
             ip_info=""
