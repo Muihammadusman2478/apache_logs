@@ -32,6 +32,17 @@ if [[ -z "$start_epoch" || -z "$end_epoch" ]]; then
     exit 1
 fi
 
+# Function to truncate long strings
+truncate_string() {
+    local str="$1"
+    local max_length="$2"
+    if [[ ${#str} -gt $max_length ]]; then
+        echo "${str:0:$((max_length-3))}..."
+    else
+        echo "$str"
+    fi
+}
+
 
 # Loop through all applications
 for app_name in $(ls -l /home/master/applications/ | grep "^d" | awk '{print $NF}'); do
@@ -62,6 +73,9 @@ for app_name in $(ls -l /home/master/applications/ | grep "^d" | awk '{print $NF
             domain=$(dig +short -x "$ip" | head -n 1)
             ip_info=""
             [[ "$ip" == "$server_ip" ]] && ip_info=" --> IT IS YOUR SERVER IP"
+            # Truncate domain and country if necessary
+            domain=$(truncate_string "$domain" 60)
+           country=$(truncate_string "$country" 30)
             printf "\e[1;32m| %-10s | %-18s | %-15s | %-35s %s|\e[0m\n" "$count" "$ip" "${country:-Unknown}" "${domain:-N/A}" "$ip_info" | append_and_display
         done
 
@@ -83,6 +97,10 @@ for app_name in $(ls -l /home/master/applications/ | grep "^d" | awk '{print $NF
             domain=$(dig +short -x "$ip" | head -n 1)
             ip_info=""
             [[ "$ip" == "$server_ip" ]] && ip_info=" --> IT IS YOUR SERVER IP"
+            # Truncate domain, country, and URL if necessary
+            domain=$(truncate_string "$domain" 50)
+            country=$(truncate_string "$country" 30)
+            url=$(truncate_string "$url" 60)
             printf "\e[1;32m| %-10s | %-18s | %-15s | %-35s | %-30s %s|\e[0m\n" "$count" "$ip" "${country:-Unknown}" "${domain:-N/A}" "$url" "$ip_info" | append_and_display
         done
 
