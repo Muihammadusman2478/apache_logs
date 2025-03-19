@@ -56,7 +56,7 @@ for app_name in $(ls -l /home/master/applications/ | grep "^d" | awk '{print $NF
     echo -e "\e[1;36m═════════════════════════════════════════════════════════════════════════════\e[0m\n" | append_and_display
 
     # Define log files for the application
-    log_files="/home/master/applications/$app_name/logs/apache_*access.log*"
+    log_files="/home/master/applications/$app_name/logs/apache_*access.log"
 
     # Function to generate Unique IPs report
     generate_unique_ips_report() {
