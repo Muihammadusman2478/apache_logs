@@ -2,7 +2,7 @@
 
 LOG_FILES=../logs/apache_*access.log
 
-# Get top 20 user agents in last 24 hours
+# Get top user agents in last 24 hours
 echo "Top User Agents:"
 awk -v end_time="$(date --date='24 hours ago' '+%d/%b/%Y:%H')" '$4 >= "["end_time' $LOG_FILES | \
 awk -F\" '{print $6}' | \
